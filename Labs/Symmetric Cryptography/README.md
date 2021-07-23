@@ -12,9 +12,10 @@
 openssl enc -e -aes-256-cbc -in plaintext.txt -out encrypted.txt
 ```
 
-4. Examine the contents of the output file created by the command encrypted.txt. The contents of the original file have been encrypted using "symmetric encryption" in the form of a password.
+4. Examine the contents of the output file encrypted.txt. The contents of the original file have been encrypted using "symmetric encryption" in the form of a password.
 
 5. Run the following command to decrypt the file you just encrypted. You will need to enter the same password you used previously.
 ```
 openssl enc -d -aes-256-cbc -in encrypted.txt -out decrypted.txt
 ```
+6. Examine the contents of the output file decrypted.txt. You should see the same text as the original plaintext.txt file. See https://www.openssl.org/docs/man1.1.1/man1/openssl-enc.html for documentation on the "openssl enc" command to explore all of the options.
