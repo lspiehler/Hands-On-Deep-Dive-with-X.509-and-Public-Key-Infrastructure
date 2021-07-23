@@ -1,8 +1,8 @@
 
 # Symmetric Cryptography Lab
 
-1. Launch a command prompt and change directory to the "Labs\Symmetric Cryptography" directory.
-
+1. Launch a command prompt and change directory to the "Labs\Symmetric Cryptography" directory.  
+![cd_cmd](./images/cd_cmd.png)
 2. Also navigate to "Labs\Symmetric Cryptography" in an explorer window so that you can see the files in the directory.
 
 2. You should see a file named plaintext.txt. Open it and customize the text.
