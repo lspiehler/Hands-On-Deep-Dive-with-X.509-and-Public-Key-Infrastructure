@@ -27,6 +27,7 @@
           data-markdown
           data-separator="-----"
           data-separator-vertical="---"
+          data-transition="slide"
         >
           <textarea data-template>
             ## Hands-On Deep Dive with X.509 and Public Key Infrastructure - Day 1
@@ -37,35 +38,109 @@
           </textarea>
         </section>
         <section>
-          <h2>Symmetric Cryptography</h2>
-          <div class="r-stack">
-            <h3 class="fragment current-visible" data-fragment-index="1">What is it?</h3>
-            <p class="fragment" data-fragment-index="2">
-              Symmetric encryption is a type of encryption where only one key (a secret key) is used to both encrypt and decrypt digital information.
-            </p>
-          </div>
-          <table>
-            <tr>
-              <td>
-                <img class="fragment" data-fragment-index="5" style="margin-bottom: 50px; width: 200px;" src="images/rsa_token.png">
-              </td>
-              <td style="width: 60%;">
+          <section data-auto-animate data-auto-animate-id="certificate">
+            <h2 id="certificate">What is a certificate?</h2>
+          </section>
+          <section data-auto-animate data-auto-animate-id="certificate">
+            <h2 id="certificate">What is a certificate?</h2>
+            <table>
+              <tr>
+                <td style="width: 40%;"><img src="images/certificate.png"></td>
+                <td style="vertical-align: middle;">
+                  <span class="fragment">X.509 is a standard format for public key certificates, <strong><u>signed digital documents</u></strong> that securely associate <strong><u>cryptographic key pairs</u></strong> with <strong><u>identities</u></strong> such as websites, individuals, or organizations.</span>
+                  <img class="fragment" style="width: 150px;" src="images/confused_emoji.png" />
+                </td>
+              </tr>
+            </table>
+            <aside class="notes">
+              - I should start out by saying we're talking about "X.509 certificates" and this is what one looks like<br />
+              - Important parts underlined that we'll be focusing on today<br />
+              - You should be asking yourself, "What the hell does that mean"<br />
+              - We can't really have a conversation about certificates until we know what key pairs are and what singing means, and we can't even talk about signing until we know what hashing is. 
+            </aside>
+          </section>
+        </section>
+        <section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <p>A hash function is any function that can be used to map data of arbitrary size to fixed-size values. The values returned by a hash function are called hash values, hash codes, digests, or simply hashes</p>
+            <img style="margin-top: 0px; width: 55%;" class="fragment" src="images/hash_simple.png">
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>  
+            <div>
+              <h3>Applications of Hashing</h3>
+              <ul>
+                <li class="fragment">Message Digest</li>
+                <li class="fragment">Storing credentials</li>
+                <li class="fragment">Determining whether data has changed</li>
+                <li class="fragment">Data deduplication</li>
+                <li class="fragment">Data structures (hash tables)</li>
+              </ul>
+            </div>
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>  
+            <p>Message Digest</p>
+            <img class="fragment" src="images/heidi_download.png"><img class="fragment" style="margin-left: 10px;" src="images/heidi_sha1.png"><br />
+            <img class="fragment" src="images/linux_sha1sum.png"><br />
+            <img class="fragment" src="images/powershell_get-filehash.png">
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <p><strong>Hashing is not reversible!!!</strong></p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <p>Storing passwords / Password verification</p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <img style="width: 65%; margin-top: 0px;" src="images/hashing_registration.png"><br />
+            <img style="width: 65%; margin-top: 0px;" class="fragment" src="images/hashing_login.png">
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <img style="width: 65%; margin-top: 0px;" src="images/hash_sizes.png">
+            <pre class="fragment"><code data-line-numbers="|1-2|3-4|5-6|7-8">[root@lyasnode2 ~]# echo hello | md5sum
+b1946ac92492d2347c6235b4d2611184  -
+[root@lyasnode2 ~]# echo hello | sha1sum
+f572d396fae9206628714fb2ce00f72e94f2258f  -
+[root@lyasnode2 ~]# echo hello | sha256sum
+5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03  -
+[root@lyasnode2 ~]# echo hello | sha512sum                        ➞
+e7c22b994c59d9cf2b48e549b1e24666636045930d3da7c1acb299d1c3b7f931f94aae41edda2c2b207a36e10f8bcb8d45223e54878f5b316e7ce3b6bc019629  -
+            </code></pre>
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <h3>Collisions!!! 👎</h3>
+            <p class="fragment"><strong>Hash collision</strong> - In computer science, a collision or clash is a situation that occurs when two distinct pieces of data have the same hash value, checksum, fingerprint, or cryptographic digest.</p>
+            <p class="fragment"><strong>Collision attack</strong> - In cryptography, a collision attack on a cryptographic hash tries to find two inputs producing the same hash value, i.e. a hash collision.</p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <h3>Collisions!!! 👎</h3>
+            <p>A collision could allow an attacker to change the properties of a certificate without affecting the validity of the signature.</p>
+            <ul>
+              <li class="fragment"><strike>MD5</strike></li>
+              <li class="fragment"><strike>SHA-1</strike></li>
+              <li class="fragment">SHA-2 👪
                 <ul>
-                  <li class="fragment" data-fragment-index="3">Password</li>
-                  <li class="fragment" data-fragment-index="4">Passphrase / Shared Secret</li>
-                  <li class="fragment" data-fragment-index="5">RSA Token</li>
-                  <li class="fragment" data-fragment-index="6">TOTP (Authenticator Apps)</li>
+                  <li class="fragment">SHA-256</li>
+                  <li class="fragment">SHA-384</li>
+                  <li class="fragment">SHA-512</li>
                 </ul>
-              </td>
-              <td>
-                <img class="fragment" data-fragment-index="6" style="margin-bottom:0px; width: 200px;" src="images/totp_qr.png">
-              </td>
-            </tr>
-          </table>
-          <div class="r-stack">
-            <small class="fragment current-visible" data-fragment-index="7">otpauth://totp/Google%3Agoogleuser%40pkiaas.io?secret=4asejs3ea4sz73qbx7rw2nybbckg7agd&issuer=Google</small>
-            <small class="fragment" data-fragment-index="8">otpauth://totp/Google%3Agoogleuser%40pkiaas.io?<mark>secret=4asejs3ea4sz73qbx7rw2nybbckg7agd</mark>&issuer=Google</small>
-          </div>
+              </li>
+            </ul>
+            <aside class="notes">
+              - SHA-1 (Deprecated by NIST in 2011 and disallowed in 2013
+            </aside>
+          </section>
+          <section data-auto-animate data-auto-animate-id="hashing">
+            <h2 id="hashing">Hashing</h2>
+            <p>Show MD5 hash collision photos</p>
+          </section>
         </section>
       </div>
     </div>
@@ -81,10 +156,15 @@
       // - https://revealjs.com/config/
       Reveal.initialize({
         hash: true,
-
+        pdfSeparateFragments: false,
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
       });
     </script>
+    <style>
+      td {
+        border-bottom: 0px !important;
+      }
+    </style>
   </body>
 </html>
