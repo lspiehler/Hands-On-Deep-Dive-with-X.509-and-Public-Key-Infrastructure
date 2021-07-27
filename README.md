@@ -2,7 +2,10 @@
 # Hands-On Deep Dive with X.509 and Public Key Infrastructure
 This is the repository for all lab material and documents related to the "Hands-On Deep Dive with X.509 and Public Key Infrastructure" course.
 
-## [Course Abstract](https://lspiehler.github.io/Hands-On-Deep-Dive-with-X.509-and-Public-Key-Infrastructure/ABSTRACT.html)
+## Course Material
+* [Abstract](https://lspiehler.github.io/Hands-On-Deep-Dive-with-X.509-and-Public-Key-Infrastructure/ABSTRACT.html)
+* [Presentations](https://lspiehler.github.io/Hands-On-Deep-Dive-with-X.509-and-Public-Key-Infrastructure/Presentations/)
+* [Labs](https://lspiehler.github.io/Hands-On-Deep-Dive-with-X.509-and-Public-Key-Infrastructure/Labs/)
 
 ## Lab Prerequisites
 * OpenSSL must be installed and the path containing the openssl binary must be in the PATH environment variable.
