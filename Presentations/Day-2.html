@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="reveal.js/dist/reset.css" />
+    <link rel="stylesheet" href="reveal.js/dist/reveal.css" />
+    <link rel="stylesheet" href="reveal.js/dist/theme/league.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="reveal.js/plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-markdown
+          data-separator="-----"
+          data-separator-vertical="---"
+        >
+          <textarea data-template>
+            ## Hands-On Deep Dive with X.509 and Public Key Infrastructure - Day 1
+
+            Presented By: Lyas Spiehler
+
+            [https://github.com/lspiehler](https://github.com/lspiehler)
+          </textarea>
+        </section>
+        <section data-transition="slide-in slide-out">
+          <h2>Symmetric Cryptography</h2>
+          <div class="r-stack">
+            <h3 class="fragment current-visible" data-fragment-index="1">What is it?</h3>
+            <p class="fragment" data-fragment-index="2">
+              Symmetric encryption is a type of encryption where only one key (a secret key) is used to both encrypt and decrypt digital information.
+            </p>
+          </div>
+          <table>
+            <tr>
+              <td>
+                <img class="fragment" data-fragment-index="5" style="margin-bottom: 50px; width: 200px;" src="images/rsa_token.png">
+              </td>
+              <td style="width: 60%;">
+                <ul>
+                  <li class="fragment" data-fragment-index="3">Password</li>
+                  <li class="fragment" data-fragment-index="4">Passphrase / Shared Secret</li>
+                  <li class="fragment" data-fragment-index="5">RSA Token</li>
+                  <li class="fragment" data-fragment-index="6">TOTP (Authenticator Apps)</li>
+                </ul>
+              </td>
+              <td>
+                <img class="fragment" data-fragment-index="6" style="margin-bottom:0px; width: 200px;" src="images/totp_qr.png">
+              </td>
+            </tr>
+          </table>
+          <div class="r-stack">
+            <small class="fragment current-visible" data-fragment-index="7">otpauth://totp/Google%3Agoogleuser%40pkiaas.io?secret=4asejs3ea4sz73qbx7rw2nybbckg7agd&issuer=Google</small>
+            <small class="fragment" data-fragment-index="8">otpauth://totp/Google%3Agoogleuser%40pkiaas.io?<mark>secret=4asejs3ea4sz73qbx7rw2nybbckg7agd</mark>&issuer=Google</small>
+          </div>
+        </section>
+        <section data-transition="slide-in slide-out">
+          <h2>Symmetric Cryptography</h2>
+          <ul>
+            <li class="fragment">Weaknesses
+              <ul>
+                <li class="fragment">Easily shared</li>
+                <li class="fragment">Easily stolen</li>
+                <li class="fragment">Often stored insecurely</li>
+                <li class="fragment">Often vulnerable to dictionary & brute force attacks</li>
+                <li class="fragment">Difficult to remember</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section data-transition="slide-in slide-out">
+          <h2>Symmetric Cryptography</h2>
+          <ul>
+            <li class="fragment">Work-Arounds
+              <ul>
+                <li class="fragment">Increase complexity requirements</li>
+                <li class="fragment">Shorter expiration</li>
+                <li class="fragment">2FA</li>
+              </ul>
+            </li>
+            <li class="fragment">Solution
+              <ul>
+                <li class="fragment">Asymmetric cryptography</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="reveal.js/dist/reveal.js"></script>
+    <script src="reveal.js/plugin/notes/notes.js"></script>
+    <script src="reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="reveal.js/plugin/zoom/zoom.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
+      });
+    </script>
+  </body>
+</html>
