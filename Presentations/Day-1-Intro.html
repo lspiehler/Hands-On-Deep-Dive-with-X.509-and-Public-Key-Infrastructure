@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="reveal.js/dist/reset.css" />
+    <link rel="stylesheet" href="reveal.js/dist/reveal.css" />
+    <link rel="stylesheet" href="reveal.js/dist/theme/league.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="reveal.js/plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-markdown
+          data-separator="-----"
+          data-separator-vertical="---"
+          data-transition="slide"
+        >
+          <textarea data-template>
+            ## Hands-On Deep Dive with X.509 and Public Key Infrastructure - Day 1
+
+            Presented By: Lyas Spiehler
+
+            [https://github.com/lspiehler](https://github.com/lspiehler)
+          </textarea>
+        </section>
+        <section>
+          <section data-auto-animate data-auto-animate-id="certificate">
+            <h2 id="certificate">What is a certificate?</h2>
+          </section>
+          <section data-auto-animate data-auto-animate-id="certificate">
+            <h2 id="certificate">What is a certificate?</h2>
+            <table>
+              <tr>
+                <td style="width: 40%;"><img src="images/certificate.png"></td>
+                <td style="vertical-align: middle;">
+                  <span class="fragment">X.509 is a standard format for public key certificates, <strong><u>signed digital documents</u></strong> that securely associate <strong><u>cryptographic key pairs</u></strong> with <strong><u>identities</u></strong> such as websites, individuals, or organizations.</span>
+                  <img class="fragment" style="width: 150px;" src="images/confused_emoji.png" />
+                </td>
+              </tr>
+            </table>
+            <aside class="notes">
+              - I should start out by saying we're talking about "X.509 certificates" and this is what one looks like<br />
+              - Important parts underlined that we'll be focusing on today<br />
+              - You should be asking yourself, "What the hell does that mean"<br />
+              - We can't really have a conversation about certificates until we know what key pairs are and what singing means, and we can't even talk about signing until we know what hashing is. 
+            </aside>
+          </section>
+          <section data-auto-animate data-auto-animate-id="certificate">
+            <h2 id="certificate">What is a certificate?</h2>
+            <h3>Ingredients</h3>
+            <ul>
+              <li class="fragment">Public and private key pair</li>
+              <li class="fragment">List of attributes
+                <ul>
+                  <li>Common Name</li>
+                  <li>Subject Alternative Names</li>
+                  <li>Expiration date</li>
+                  <li>Serial number</li>
+                </ul>
+              </li>
+              <li class="fragment">Signature</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section data-auto-animate>
+            <h3>This is the last slide in this section</h3>
+          </section>
+          <section data-auto-animate>
+              <h3>This is the last slide in this section</h3>
+              <small>If you progress to the next fragment, you will navigate away from this page.</small>
+              <small id="last-fragment" class="fragment">Leaving slide desk...</small>
+          </section>
+        </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="reveal.js/dist/reveal.js"></script>
+    <script src="reveal.js/plugin/notes/notes.js"></script>
+    <script src="reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="reveal.js/plugin/zoom/zoom.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        pdfSeparateFragments: false,
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
+      });
+
+      Reveal.on( 'fragmentshown', event => {
+        if(event.fragment.getAttribute('id') == 'last-fragment') {
+          window.location = 'Day-1-A-Asymmetric_Cryptography.html'
+        }
+      });
+    </script>
+    <style>
+      td {
+        border-bottom: 0px !important;
+      }
+    </style>
+  </body>
+</html>

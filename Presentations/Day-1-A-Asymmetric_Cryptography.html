@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="reveal.js/dist/reset.css" />
+    <link rel="stylesheet" href="reveal.js/dist/reveal.css" />
+    <link rel="stylesheet" href="reveal.js/dist/theme/league.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="reveal.js/plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section data-auto-animate data-auto-animate-id="pkc">
+            <h2 id="pkc">Public-key Cryptography</h2>
+          </section>
+          <section data-auto-animate data-auto-animate-id="pkc">
+            <h2 id="pkc">Public-key Cryptography</h2>
+            <p>Public-key cryptography, or asymmetric cryptography, is a cryptographic system that uses pairs of keys: public keys (which may be known to others), and private keys (which may never be known by any except the owner). The generation of such key pairs depends on cryptographic algorithms which are based on mathematical problems termed one-way functions.</p>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section data-auto-animate data-auto-animate-id="pkc">
+            <h2 id="pkc">Public-key Cryptography</h2>
+            <p>Asymetric vs symmetric cryptography</p>
+          </section>
+          <section data-auto-animate data-auto-animate-id="pkc">
+            <h2 id="pkc">Public-key Cryptography</h2>
+            <img style="margin-top: 0px; width: 65%;" src="images/asymmetric_crypto.png">
+            <img style="margin-top: 0px; width: 65%;" data-fragment-index="1" class="fragment" src="images/symmetric_crypto.png">
+            <small class="fragment" data-fragment-index="1">https://www.twilio.com/blog/what-is-public-key-cryptography</small>
+          </section>
+          <section data-auto-animate data-auto-animate-id="pkc">
+            <h2 id="pkc">Public-key Cryptography</h2>
+            <p>Symmetric cryptography OpenSSL example:</p>
+            <pre style="margin-top: 0px; width: 100%; height: 450px;" class="fragment"><code data-line-numbers="1-2|4-6|8-10|12-13|15-16">C:\>more plaintext.txt
+This is my plaintext data
+
+C:\>openssl enc -e -aes-256-cbc -in plaintext.txt -out encrypted.txt
+enter aes-256-cbc encryption password:
+Verifying - enter aes-256-cbc encryption password:
+
+C:\>more encrypted.txt
+Salted__Æë²0╠½,Æ▓`≤╛Ü¢5wΩ;╥╤▄á
+s4&≈╗∩sHrá╖▌ó1
+
+C:\>openssl enc -d -aes-256-cbc -in encrypted.txt -out decrypted.txt
+enter aes-256-cbc decryption password:
+
+C:\>more decrypted.txt
+This is my plaintext data
+            </code></pre>
+          </section>
+          <section data-auto-animate data-auto-animate-id="pkc">
+            <h2 style="margin-bottom: 0px;" id="pkc">Public-key Cryptography</h2>
+            <p style="margin-top: 0px;">Asymmetric cryptography OpenSSL example:</p>
+            <table class="fragment" data-fragment-index="1" style="height: 575px; margin-left: -175px; margin-top: -40px;">
+              <tr>
+                <td>
+                  <div style="height: 100%; width: 100px; text-align: center;">
+                    <p style="line-height: normal">Files
+                      <i class="fas fa-file-alt"></i></i><br /><small style="font-size: 16px;">plaintext.txt</small>
+                      <span id="private" style="display: none;"><i class="fas fa-lock"></i><br /><small style="font-size: 16px;">private.pem</small></span>
+                      <span id="public" style="display: none;"><i class="fas fa-lock-open"></i><br /><small style="font-size: 16px;">public.pem</small></span>
+                      <span id="encrypted" style="display: none;"><i class="fas fa-file-invoice"></i><br /><small style="font-size: 16px;">encrypted.txt</small></span>
+                      <span id="decrypted" style="display: none;"><i class="fas fa-file-alt"></i><br /><small style="font-size: 16px;">decrypted.txt</small></span>
+                    </p>
+                  </div>
+                </td>
+                <td>
+                  <pre style="overflow: hidden; height: 90%; width: 1100px;" class="fragment" data-fragment-index="1"><code id="openssl-asymmetric" style="overflow-y: hidden;" data-line-numbers="1-2|4|10-37|39|42-51|53|55-56|58|60-61">C:\>more plaintext.txt
+This is my plaintext data
+
+C:\>openssl genrsa -out private.pem 2048
+Generating RSA private key, 2048 bit long modulus (2 primes)
+..........+++++
+........................+++++
+e is 65537 (0x010001)
+
+C:\>more private.pem
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAub+WER1XuV/PwUHrcHEXnWkKMbjB3abiUXV1wNwSbl7a0TmU
+JRN7tsC9ISVxz5177xMU0sAWRonuG5sBwhT5NlFRMlUbkKqVnnTtucH4Auwcryr4
+P+bDHtT78SrIaimwmg44oBrayzjDauqsFRWjlIoH7mZZhLo2gUkz/3BqhHX2jnG8
+4A8IBoY/8kyP6xiKCSSCL6Kcc6qQo4cHM/vHBuUb8ldbof1AwYZidC4sPjG+2pAj
++PGwdk3DMI8MTuDgFT6kj9J7+WM0Oe6igAXj/uQEKBn2ugJpx8yjC8VTMoYmGI/S
+d747oDOHmIUtqj5rfVlxoptWTOSgILbwgLo7owIDAQABAoIBAE1sWyvVFDyzgBBo
+3q8mpJY7M0GYZk5ygkE7+ZIi6RfSN9kf6+0sWtPJMMxBJFhKp172kCZsZJyQX4xo
+Jupz/ZCzgmm9adj6EZVT3ccg37SwICCvg3x3Pnt6gW17zL/bkr4UEWxC5VHx3hqR
+qJq9Q0rl4fpv9P5K8+8dySu++tcs8VIqHecgvRMinycGA2Dj07ObOW+FDPatm6ZY
+qllOcv0uusH3/ARjfPwmrjdW7EOWOIqP42XNxUrJHnFw6zA5Z29WXeNks/0HpK33
+rf/jj8Ue65UkrumzVQjhrkZonm4qcPHqeBZv9OgVyBqM+2WMXrdXAa4JO65gsEQK
+3/I/AZECgYEA9LOLWzCyN+4Ar/0rCxBDNuhNPM+zmhwqVHpsSA+t+lgYpRLEbFAb
+W6KfYPB2ZQccORxVayN1zItuIq6gnYqfrzbbJs16vJl6c0Dnva9nyz0ogMWgXcEb
+1JLFzDL3lQAZwqgTm6jHtsAamJsoyZfDuG+RB3dPY0TckBcKALosLMsCgYEAwlMy
+eibOGjwK2Y4NgdQoraI7tr5dfnqGq4zSutmWUoxQewcYhmmMyhGWstAYC6QINFNw
+CV2fGROWsjlFZzsKqV6JJytOj1kz4zELzgSpTuOmkiAYMKx7zC/8z3FObIRz8z2y
+ilZLs8xAZ4NJnGrysGUjBItwccZJi1mTQkpFaYkCgYBethecJg704uPVOjIsyBCb
+8fHjNakYXwprRC8g/SCjovF3AvqPybmtEBaMGMZaeBQObs8I9uKjVtw8BEcacws3
+cA4GyMVWtjjU3yxTGM8dtQA2R0e4wgOZlW2FibyWKUHPO+rK9trF+zjQFE4HKPyS
+KGyD7UQG8iJEiwZOHcD3XQKBgQCeegk1c0YsQQE8MUw0sBhImoEGZLOMvVHsv9jv
+xxl/0qyj2MKYg6Xs+XEj/O9PNwP14IIDMVXZto70ZB6EtLLaM5240umroDzfsJUG
+++gzzRaAHyp7L396ozwS1T325AJHwe5EQWJVjGKNyJUUumeXkbOANlOKhgJeYbvl
+mPqIuQKBgQCjx/vVZm4RMEPvQqgtwqlozc4mhmFPPD5whLN18mCb2eyVHfGZ78Ls
+P/qsasGyHCTcLf3xaLjdqujk2XGYbdZgtOHqsO3FdTNWwyfQx07mcllc+b94r825
+IzmfV9j1F8xUI2G3gsl12OJqbMFv8Lt2Gygr9ysLKq5iov0kQ/sNtA==
+-----END RSA PRIVATE KEY-----
+
+C:\>openssl rsa -in private.pem -pubout -out public.pem
+writing RSA key
+
+C:\>more public.pem
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAub+WER1XuV/PwUHrcHEX
+nWkKMbjB3abiUXV1wNwSbl7a0TmUJRN7tsC9ISVxz5177xMU0sAWRonuG5sBwhT5
+NlFRMlUbkKqVnnTtucH4Auwcryr4P+bDHtT78SrIaimwmg44oBrayzjDauqsFRWj
+lIoH7mZZhLo2gUkz/3BqhHX2jnG84A8IBoY/8kyP6xiKCSSCL6Kcc6qQo4cHM/vH
+BuUb8ldbof1AwYZidC4sPjG+2pAj+PGwdk3DMI8MTuDgFT6kj9J7+WM0Oe6igAXj
+/uQEKBn2ugJpx8yjC8VTMoYmGI/Sd747oDOHmIUtqj5rfVlxoptWTOSgILbwgLo7
+owIDAQAB
+-----END PUBLIC KEY-----
+
+C:\>openssl rsautl -encrypt -pubin -inkey public.pem -in plaintext.txt -out encrypted.txt
+
+C:\>more encrypted.txt
+▐2Ç■Å{φeè9¼ëä├»àó7à▐Çg√Γ⌐ûù╖Ö%╗n┘±ô-z`r¢Gªä¿ö°hON½¥σ■τbÜ▌Góz╩εåJG\╨b╟3o9µ₧╡YSαZZFd≥g¬Γû╙ασ┘-2R╕U
+
+C:\>openssl rsautl -decrypt -inkey private.pem -in encrypted.txt -out decrypted.txt
+
+C:\>more decrypted.txt
+This is my plaintext data
+                  </code></pre>
+                </td>
+              </tr>
+            </table>
+          </section>
+          <section data-auto-animate>
+            <h3>This is the last slide in this section</h3>
+          </section>
+          <section data-auto-animate>
+              <h3>This is the last slide in this section</h3>
+              <small>If you progress to the next fragment, you will navigate away from this page.</small>
+              <small id="last-fragment" class="fragment">Leaving slide desk...</small>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="reveal.js/dist/reveal.js"></script>
+    <script src="reveal.js/plugin/notes/notes.js"></script>
+    <script src="reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="reveal.js/plugin/zoom/zoom.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        pdfSeparateFragments: false,
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
+      });
+
+      Reveal.on( 'fragmentshown', event => {
+        if(event.fragment.getAttribute('id') == 'openssl-asymmetric') {
+          if(event.fragment.getAttribute('data-fragment-index') >= 1) {
+            let private = document.getElementById('private');
+            private.style.display = 'inline';
+          }
+          if(event.fragment.getAttribute('data-fragment-index') >= 3) {
+            let public = document.getElementById('public');
+            public.style.display = 'inline';
+          }
+          if(event.fragment.getAttribute('data-fragment-index') >= 5) {
+            let encrypted = document.getElementById('encrypted');
+            encrypted.style.display = 'inline';
+          }
+          if(event.fragment.getAttribute('data-fragment-index') >= 7) {
+            let decrypted = document.getElementById('decrypted');
+            decrypted.style.display = 'inline';
+          }
+        }
+
+        if(event.fragment.getAttribute('id') == 'last-fragment') {
+          window.location = 'Day-1-B-Hashing.html'
+        }
+        //console.log(event.fragment.getAttribute('data-fragment-index'));
+        //console.log(event.fragment);
+      } );
+
+      Reveal.on( 'fragmenthidden', event => {
+        if(event.fragment.getAttribute('id') == 'openssl-asymmetric') {
+          if(event.fragment.getAttribute('data-fragment-index') <= 1) {
+            let private = document.getElementById('private');
+            private.style.display = 'none';
+          }
+          if(event.fragment.getAttribute('data-fragment-index') <= 3) {
+            let public = document.getElementById('public');
+            public.style.display = 'none';
+          }
+          if(event.fragment.getAttribute('data-fragment-index') <= 5) {
+            let encrypted = document.getElementById('encrypted');
+            encrypted.style.display = 'none';
+          }
+          if(event.fragment.getAttribute('data-fragment-index') <= 7) {
+            let decrypted = document.getElementById('decrypted');
+            decrypted.style.display = 'none';
+          }
+        }
+        //console.log(event.fragment.getAttribute('data-fragment-index'));
+        //console.log(event.fragment);
+      } );
+    </script>
+    <style>
+      td {
+        border-bottom: 0px !important;
+      }
+    </style>
+  </body>
+</html>
