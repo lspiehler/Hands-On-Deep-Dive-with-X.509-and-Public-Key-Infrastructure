@@ -46,6 +46,13 @@ openssl rsautl -encrypt -pubin -inkey public.pem -in plaintext.txt -out encrypte
 
 12. Examine the contents of encrypted.txt.
 
-13. Finally
+13. Finally, run the following command to decrypt the contents of the encrypted.txt file into a new file named decrypted.txt using the private key. You will be prompted to enter a password because the private key is encrypted.
+```
+openssl rsautl -decrypt -inkey pkcs8.pem -in encrypted.txt -out decrypted.txt
+```
 
-12. Examine the contents of the output file decrypted.txt. You should see the same text as the original plaintext.txt file. Notice the arguments used for the commands, "-in", "-out", etc. These arguments are used to indicate the names of input and output files and customize the execution of the command. Input files must already exist and output files will be created if they don't already exist. See https://www.openssl.org/docs/man1.1.1/man1/openssl-enc.html for documentation on the "openssl enc" command to explore all of the options.
+14. Examine the contents of decrypted.txt.
+
+15. Modify the command above to decrypt encrypted.txt using pkcs1.pem. Notice that you are able to decrypt because the private keys are the same, but stored in different formats.
+
+16. Generate a new private key and see how OpenSSL responds when you try to decrypt the file using it.
