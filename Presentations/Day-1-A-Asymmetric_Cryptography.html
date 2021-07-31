@@ -43,13 +43,12 @@
             <img style="margin-top: 0px; width: 65%;" data-fragment-index="1" class="fragment" src="images/symmetric_crypto.png">
             <small class="fragment" data-fragment-index="1">https://www.twilio.com/blog/what-is-public-key-cryptography</small>
           </section>
-          <section data-auto-animate data-auto-animate-id="pkc">
-            <h2 id="pkc">Public-key Cryptography</h2>
-            <p>Symmetric cryptography OpenSSL example:</p>
-            <pre style="margin-top: 0px; width: 100%; height: 450px;" class="fragment"><code data-line-numbers="1-2|4-6|8-10|12-13|15-16">C:\>more plaintext.txt
+          <section data-transition="cube">
+            <h2>OpenSSL Symmetric Cryptography</h2>
+            <pre style="margin-top: 0px; width: 100%; height: 450px;"><code data-line-numbers="1-2|4-6|8-10|12-13|15-16">C:\>more plaintext.txt
 This is my plaintext data
 
-C:\>openssl enc -e -aes-256-cbc -in plaintext.txt -out encrypted.txt
+C:\>openssl enc -e -aes-256-cbc -pbkdf2 -in plaintext.txt -out encrypted.txt
 enter aes-256-cbc encryption password:
 Verifying - enter aes-256-cbc encryption password:
 
@@ -57,12 +56,56 @@ C:\>more encrypted.txt
 Salted__Æë²0╠½,Æ▓`≤╛Ü¢5wΩ;╥╤▄á
 s4&≈╗∩sHrá╖▌ó1
 
-C:\>openssl enc -d -aes-256-cbc -in encrypted.txt -out decrypted.txt
+C:\>openssl enc -d -aes-256-cbc -pbkdf2 -in encrypted.txt -out decrypted.txt
 enter aes-256-cbc decryption password:
 
 C:\>more decrypted.txt
 This is my plaintext data
             </code></pre>
+          </section>
+          <section>
+            <h2 id="pkc">OpenSSL Symmetric Encryption</h2>
+            <!--<p>Symmetric cryptography OpenSSL example:</p>-->
+            <img src="images/openssl-symmetric-encryption.png" />
+            <div class="r-stack">
+              <p class="fragment current-visible" style="text-align: left;">
+                <small>
+                  <code>
+                    <span style="color: #00ff00">openssl enc -e -aes-256-cbc -pbkdf2</span> <span style="color: #FF7276">-in plaintext.txt</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
+                    enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span><br />
+                    Verifying - enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span>
+                  </code>
+                </small>
+              </p>
+              <p class="fragment current-visible" style="text-align: left !important;">
+                <small>
+                  <code>
+                    <span style="color: #00ff00">openssl enc -e -aes-256-cbc -pbkdf2</span> <span style="color: #FF7276">-in plaintext.txt -pass pass:mypassword</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
+                  </code>
+                </small>
+              </p>
+              <p class="fragment current-visible" style="text-align: left !important;">
+                <small>
+                  <code>
+                    <span style="color: #FF7276">echo mypassword | </span><span style="color: #00ff00">openssl enc -e -aes-256-cbc -pbkdf2</span> <span style="color: #FF7276">-in plaintext.txt -pass stdin</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
+                  </code>
+                </small>
+              </p>
+            </div>
+          </section>
+          <section>
+            <h2 id="pkc">OpenSSL Symmetric Decryption</h2>
+            <!--<p>Symmetric cryptography OpenSSL example:</p>-->
+            <img src="images/openssl-symmetric-decryption.png" />
+            <p style="text-align: left;">
+              <small>
+                <code>
+                  <span style="color: #00ff00">openssl enc -d -aes-256-cbc -pbkdf2</span> <span style="color: #FF7276">-in plaintext.txt</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
+                  enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span><br />
+                  Verifying - enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span>
+                </code>
+              </small>
+            </p>
           </section>
           <section data-auto-animate data-auto-animate-id="pkc">
             <h2 style="margin-bottom: 0px;" id="pkc">Public-key Cryptography</h2>
@@ -133,12 +176,12 @@ BuUb8ldbof1AwYZidC4sPjG+2pAj+PGwdk3DMI8MTuDgFT6kj9J7+WM0Oe6igAXj
 owIDAQAB
 -----END PUBLIC KEY-----
 
-C:\>openssl rsautl -encrypt -pubin -inkey public.pem -in plaintext.txt -out encrypted.txt
+C:\>openssl rsautl -inkey public.pem -in plaintext.txt -encrypt -pubin -out encrypted.txt
 
 C:\>more encrypted.txt
 ▐2Ç■Å{φeè9¼ëä├»àó7à▐Çg√Γ⌐ûù╖Ö%╗n┘±ô-z`r¢Gªä¿ö°hON½¥σ■τbÜ▌Góz╩εåJG\╨b╟3o9µ₧╡YSαZZFd≥g¬Γû╙ασ┘-2R╕U
 
-C:\>openssl rsautl -decrypt -inkey private.pem -in encrypted.txt -out decrypted.txt
+C:\>openssl rsautl -inkey private.pem -in encrypted.txt -decrypt -out decrypted.txt
 
 C:\>more decrypted.txt
 This is my plaintext data
@@ -165,6 +208,9 @@ This is my plaintext data
             Why did we only encrypt with public keys and decrypt with our private keys in the lab? Can we encrypt with our private key and decrypt with our public key? Why would we want to do that?
           </section>
         </section>
+        <section>
+          quick test
+        </section>
       </div>
     </div>
 
@@ -183,6 +229,7 @@ This is my plaintext data
         pdfSeparateFragments: false,
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
+        transition: 'default'
       });
 
       Reveal.on( 'fragmentshown', event => {
