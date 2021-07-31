@@ -1,0 +1,46 @@
+flowchart LR
+  subgraph AA["Asymmetric Decryption"]
+    direction LR
+    subgraph A[Input]
+        direction TB
+        subgraph B["Text (StdIn)"]
+        C(Password)
+        end
+        subgraph D[File System]
+        E1("-inkey private.pem")
+        E2("-in encrypted.txt")
+        end
+    end
+
+    subgraph F[OpenSSL Binary]
+        direction BT
+        subgraph G[Command]
+            direction RL
+            rsautl
+        end
+        subgraph H[Arguments]
+            H1("direction BT")
+            H2("-decrypt")
+        end
+    end
+
+    subgraph I[Output]
+        direction TB
+        subgraph J[File System]
+        K("-out decrypted.txt")
+        end
+    end
+  end
+  
+  C -.-|Decrypt Private Key| E1
+  C -->|Input| F
+  D -->|Input| F
+  F -->|Output| J
+  H --> G
+
+  style E2 fill:#ffa922,stroke:#333,stroke-width:2px
+  style K fill:#ffa922,stroke:#333,stroke-width:2px
+
+  style A stroke:#ff0000,stroke-width:2px
+  style F stroke:#00ff00,stroke-width:2px
+  style I stroke:#00c3ff,stroke-width:2px

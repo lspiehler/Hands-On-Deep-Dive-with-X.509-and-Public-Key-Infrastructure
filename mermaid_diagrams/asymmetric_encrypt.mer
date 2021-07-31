@@ -1,0 +1,45 @@
+flowchart LR
+  subgraph AA["Asymmetric Encryption"]
+    direction LR
+    subgraph A[Input]
+        direction TB
+        subgraph D[File System]
+        E1("-inkey public.pem")
+        E2("-in plaintext.txt")
+        end
+    end
+
+    subgraph F[OpenSSL Binary]
+        direction BT
+        subgraph G[Command]
+            direction RL
+            G1(rsautl)
+        end
+        subgraph H[Arguments]
+            direction BT
+            H1("-encrypt")
+            H2("-pubin")
+        end
+    end
+
+    subgraph I[Output]
+        direction TB
+        subgraph J[File System]
+        K("-out encrypted.txt")
+        end
+    end
+  end
+  
+  D -->|Input| F
+  F -->|Output| J
+  H --> G
+
+  style E1 fill:#f9f,stroke:#333,stroke-width:2px
+  style H2 fill:#f9f,stroke:#333,stroke-width:2px
+
+  style E2 fill:#ffa922,stroke:#333,stroke-width:2px
+  style K fill:#ffa922,stroke:#333,stroke-width:2px
+
+  style A stroke:#ff0000,stroke-width:2px
+  style F stroke:#00ff00,stroke-width:2px
+  style I stroke:#00c3ff,stroke-width:2px
