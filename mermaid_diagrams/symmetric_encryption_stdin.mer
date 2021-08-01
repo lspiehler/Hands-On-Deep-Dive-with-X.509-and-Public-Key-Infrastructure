@@ -21,7 +21,7 @@ flowchart LR
           B2A("-e")
           B2B("-aes-256-cbc")
           B2C("-pbkdf2")
-          B2D("-pass pass:mypassword")
+          B2D("-pass")
       end
     end
     subgraph E[Output]
