@@ -97,16 +97,28 @@ This is my plaintext data
           <section>
             <h2 id="pkc">OpenSSL Symmetric Decryption</h2>
             <!--<p>Symmetric cryptography OpenSSL example:</p>-->
-            <img src="images/openssl-symmetric-decryption.png" />
-            <p style="text-align: left;">
-              <small>
-                <code>
-                  root@linuxnode1# <span style="color: #00ff00">openssl enc -d -aes-256-cbc -pbkdf2</span> <span style="color: #FF7276">-in plaintext.txt</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
-                  enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span><br />
-                  Verifying - enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span>
-                </code>
-              </small>
-            </p>
+            <img id="openssl-symmetric-decryption-img" src="images/openssl-symmetric-decryption.png" />
+            <div class="r-stack">
+              <p id="decrypt" style="text-align: left;" class="fragment current-visible">
+                <small>
+                  <code>
+                    root@linuxnode1# <span style="color: #00ff00">openssl enc <u>-d</u> -aes-256-cbc -pbkdf2</span> <span style="color: #FF7276">-in plaintext.txt</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
+                    enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span><br />
+                    Verifying - enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span>
+                  </code>
+                </small>
+              </p>
+              <p id="decrypt-stdout" style="text-align: left;" class="fragment current-visible">
+                <small>
+                  <code>
+                    root@linuxnode1# <span style="color: #00ff00">openssl enc <u>-d</u> -aes-256-cbc -pbkdf2</span> <span style="color: #FF7276">-in plaintext.txt</span> <span style="color: #00a2ff"><strike>-out encrypted.txt</strike></span><br />
+                    enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span><br />
+                    Verifying - enter aes-256-cbc encryption password:<span style="color: #FF7276">**********</span><br />
+                    <span style="color: #00a2ff">This is my plaintext data</span>
+                  </code>
+                </small>
+              </p>
+            </div>
           </section>
           <section data-auto-animate data-auto-animate-id="pkc">
             <h2 style="margin-bottom: 0px;" id="pkc">Public-key Cryptography</h2>
@@ -263,6 +275,11 @@ This is my plaintext data
           img.src = 'images/openssl-symmetric-encryption-stdin.png';
         }
 
+        if(event.fragment.getAttribute('id') == 'decrypt-stdout') {
+          let img = document.getElementById('openssl-symmetric-decryption-img');
+          img.src = 'images/openssl-symmetric-decryption-stdout.png';
+        }
+
         if(event.fragment.getAttribute('id') == 'last-fragment') {
           window.location = 'Day-1-B-Hashing.html'
         }
@@ -298,6 +315,11 @@ This is my plaintext data
         if(event.fragment.getAttribute('id') == 'stdin') {
           let img = document.getElementById('openssl-symmetric-encryption-img');
           img.src = 'images/openssl-symmetric-encryption.png';
+        }
+
+        if(event.fragment.getAttribute('id') == 'decrypt-stdout') {
+          let img = document.getElementById('openssl-symmetric-decryption-img');
+          img.src = 'images/openssl-symmetric-decryption.png';
         }
         //console.log(event.fragment.getAttribute('data-fragment-index'));
         //console.log(event.fragment);
