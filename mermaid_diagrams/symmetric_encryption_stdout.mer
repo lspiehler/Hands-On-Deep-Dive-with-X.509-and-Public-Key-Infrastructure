@@ -1,5 +1,5 @@
 flowchart LR
-  subgraph AA["Symmetric Decryption"]
+  subgraph AA["Symmetric Encryption"]
     direction LR
     subgraph D[Input]
       direction TB
@@ -18,7 +18,7 @@ flowchart LR
       end
       subgraph B2[Arguments]
           direction BT
-          -d
+          -e
           -aes-256-cbc
           -pbkdf2
       end
