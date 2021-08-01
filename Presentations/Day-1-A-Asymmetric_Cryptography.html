@@ -80,7 +80,7 @@ This is my plaintext data
               <p id="stdin" class="fragment current-visible" style="text-align: left !important;">
                 <small>
                   <code>
-                    root@linuxnode1# <span style="color: #00ff00">openssl enc -e -aes-256-cbc -pbkdf2 -pass pass:mypassword</span> <span style="color: #FF7276">-in plaintext.txt</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
+                    root@linuxnode1# <span style="color: #00ff00">openssl enc -e -aes-256-cbc -pbkdf2 <u>-pass pass:</u></span><span style="color: #FF7276"><u>mypassword</u></span> <span style="color: #FF7276">-in plaintext.txt</span> <span style="color: #00a2ff">-out encrypted.txt</span><br />
                   </code>
                 </small>
               </p>
