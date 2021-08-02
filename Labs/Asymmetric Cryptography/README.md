@@ -57,4 +57,4 @@ openssl rsautl -decrypt -inkey pkcs8.pem -in encrypted.txt -out decrypted.txt
 
 16. Modify the command above to decrypt encrypted.txt using pkcs1.pem. Notice that you are able to decrypt because the private keys are the same, but stored in different formats.
 
-17. Generate a new private key and see how OpenSSL responds when you try to decrypt the file using it.
+17. Share your public key with a friend and ask them to encrypt a message and send it to you. Decrypt their message with your private key.
