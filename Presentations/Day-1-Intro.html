@@ -45,9 +45,10 @@
             <h2 id="objective">Course Objective</h2>
             <p>Put cryptography under a microscope!!!</p>
             <ul>
-              <li class="fragment">X.509 Certificates</li>
-              <li class="fragment">RSA/ECC Key Pairs</li>
+              <li class="fragment">Symmetric and asymmetric cryptography</li>
               <li class="fragment">Hashing</li>
+              <li class="fragment">RSA/ECC Key Pairs</li>
+              <li class="fragment">X.509 Certificates</li>
               <li class="fragment">Certificate Authorities</li>
               <li class="fragment">Revocation (CRL and OCSP)</li>
             </ul>
@@ -57,6 +58,7 @@
           </section>
           <section data-auto-animate data-auto-animate-id="how">
             <h2 id="how">How?</h2>
+            <p>Hands on!</p>
             <img style="width: 500px;" src="images/OpenSSL_logo.png" />
             <ul>
               <li>De facto standard for most of the internet</li>
@@ -70,7 +72,8 @@
           </section>
           <section data-auto-animate data-auto-animate-id="openssl">
             <h2 id="openssl">OpenSSL</h2>
-            <p>OpenSSL is a robust, commercial-grade, and full-featured toolkit for the Transport Layer Security (TLS) and Secure Sockets Layer (SSL) protocols.</p>
+            <p>OpenSSL is a software library for applications that secure communications over computer networks against eavesdropping or need to identify the party at the other end. It is widely used by Internet servers, including the majority of HTTPS websites.</p>
+            <small><a href="https://en.wikipedia.org/wiki/OpenSSL">https://en.wikipedia.org/wiki/OpenSSL</a></small>
           </section>
           <section data-auto-animate data-auto-animate-id="openssl">
             <h2 id="openssl">OpenSSL</h2>
@@ -80,9 +83,8 @@
           </section>
           <section data-auto-animate data-auto-animate-id="openssl">
             <h2 id="openssl">OpenSSL</h2>
-            Windows - Add OpenSSL Binary Directory to %PATH%
-            <div class="r-stack">
-              <pre><code class="fragment current-visible" data-line-numbers="1-3|5-6">C:\Users\Lyas>openssl version
+            <p>Windows - Add OpenSSL Binary Directory to %PATH%</p>
+            <pre><code data-line-numbers="1-3|5-6">C:\Users\Lyas>openssl version
 'openssl' is not recognized as an internal or external command,
 operable program or batch file.
 
@@ -90,7 +92,12 @@ C:\Users\Lyas>openssl version
 OpenSSL 1.1.1d  10 Sep 2019
 
 C:\Users\Lyas>
-              </code></pre>
+            </code></pre>
+          </section>
+          <section data-auto-animate data-auto-animate-id="openssl">
+            <h2 id="openssl">OpenSSL</h2>
+            <p>Windows - Add OpenSSL Binary Directory to %PATH%</p>
+            <div class="r-stack">
               <div class="fragment current-visible">
                 <img src="images/env_vars_run.png" />
                 <p>rundll32.exe sysdm.cpl,EditEnvironmentVariables</p>
@@ -128,6 +135,7 @@ C:\Users\Lyas>
             <h3>Ingredients</h3>
             <ul>
               <li class="fragment">Public and private key pair</li>
+              <li class="fragment">Signature</li>
               <li class="fragment">List of attributes
                 <ul>
                   <li>Common Name</li>
@@ -136,7 +144,6 @@ C:\Users\Lyas>
                   <li>Serial number</li>
                 </ul>
               </li>
-              <li class="fragment">Signature</li>
             </ul>
             <aside class="notes">
             </aside>
