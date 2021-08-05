@@ -62,6 +62,11 @@ enter aes-256-cbc decryption password:
 C:\>more decrypted.txt
 This is my plaintext data
             </code></pre>
+            <aside class="notes">
+            * Example using a password to represent a symmetric key<br />
+            * Real symmetric keys should be at least 112-bits and are composed of random binary data<br />
+            * Simple example to help understand how OpenSSL commands work
+            </aside>
           </section>
           <section>
             <h2 id="pkc">OpenSSL Symmetric Encryption</h2>
@@ -212,7 +217,7 @@ This is my plaintext data
           <section data-auto-animate>
             <h3>Key Size Matters</h3>
             <table style="border: 1px solid white;">
-              <tr><th colspan="4" style="text-align: center;">Key Size (in bits)</th></tr>
+              <tr><th colspan="4" style="text-align: center;">NIST Recommended Key Size (in bits)</th></tr>
               <tr><th colspan="1" style="text-align: center;">Symmetric</th><th colspan="3" style="text-align: center; border-left: 1px solid white;">Asymmetric</th></tr>
               <tr><th style="text-align: center;">AES</th><th style="border-left: 1px solid white;">RSA</th><th>Diffie-Hellman</th><th>ECC</th></tr>
               <tr><td style="text-align: center;"><strike>80</strike></td><td style="border-left: 1px solid white;"><strike>1024</strike></td><td style="text-align: center;"><strike>1024</strike></td><td><strike>160</strike></td></tr>
@@ -222,26 +227,64 @@ This is my plaintext data
               <tr><td style="text-align: center;">256</td><td style="border-left: 1px solid white;">15360</td><td style="text-align: center;">15360</td><td>521</td></tr>
             </table>
           </section>
+          <aside class="notes">
+            * Can anyone tell me why a 112-bit symmetric AES key is considered to be as secure as a 2048-bit asymmetric RSA key?
+          </aside>
           <section data-auto-animate>
             <h3>Key Size Matters</h3>
             <p>The goal of modern cryptography is to make trying out every possible key the only approach to breaking a cipher.</p>
+            <aside class="notes">
+              * This seems obvious, but what might prevent at attacker from being forced to try every possible combination? Some kind of pattern. Patterns are bad in crypto!
+            </aside>
           </section>
           <section data-auto-animate>
             <h3>Key Size Matters</h3>
             <p>NIST minimum recommendation (112 bits)</p>
             <div class="r-stack">
-              <img class="fragment current-visible" src="images/32-bit_password.PNG" />
               <img class="fragment current-visible" src="images/112-bit_password.PNG" />
+              <img class="fragment current-visible" src="images/128-bit_password.PNG" />
             </div>
             <p><a href="https://mothereff.in/byte-counter">https://mothereff.in/byte-counter</a></p>
             <aside class="notes">
-              - NIST recommendation for minimum password length 8 characters
-              - How many smiley emojis does it take to meet NIST minimum requirements?
+              - How many characters in a password does it take to make 112 bits?<br />
+              - How many smiley emojis does it take to meet NIST minimum requirements?<br />
+              - Are these passwords as secure as a traditional symmetric key?
+            </aside>
+          </section>
+          <section data-auto-animate>
+            <h3>Key Size Matters</h3>
+            <h3 style="font-family: monospace;" id="binary1">00000000</h3>
+            <input id="rotatebinary" class="fragment" type="hidden" />
+            <input id="stoprotatebinary" class="fragment" type="hidden" />
+            <h3 id="uschars" class="fragment">A</h3>
+            <input id="rotatechars" class="fragment" type="hidden" />
+            <input id="stoprotatechars" class="fragment" type="hidden" />
+            <aside class="notes">
+              - 1 byte is equal to 8 bits<br />
+              - Each US character can be represented in 8 bits<br />
+              - 8 bits can represent up to 256 unique values<br />
+              - But there are only 95 unique values on the traditional US keyboard (symbols, and alpha-numeric characters)<br />
+              - What do you notice about the binary when we loop through all US characters?<br />
+              - If you have a 112-bit symmetric key, you're forced to iterate through every possible combination of 112 bits, if you have a 112-bit password, you only have to iterate through the bits that can possible represent those characters
             </aside>
           </section>
           <section data-auto-animate>
             <h3>Key Size Matters</h3>
             <p>Every password, symmetric key, or asymmetric private key boils down to one of a number of different possible arrangements of bits. The more bits we have, the more possibilities there are and the more time it will take to find the right value.</p>
+          </section>
+          <section data-auto-animate>
+            <h3>Key Size Matters</h3>
+            <table style="font-family: monospace;">
+              <tr><th>Bit Count</th><th>Bits</th><th>Time (seconds)</th></tr>
+              <tr><td style="text-align: center;">7</td><td id="sevenbits">0000000</td><td style="text-align: right;" id="sevenbittime"></td></tr>
+              <tr><td style="text-align: center;">8</td><td id="eightbits">00000000</td><td style="text-align: right;" id="eightbittime"></td></tr>
+              <tr><td style="text-align: center;">9</td><td id="ninebits">000000000</td><td style="text-align: right;" id="ninebittime"></td></tr>
+              <tr><td style="text-align: center;">10</td><td id="tenbits">0000000000</td><td style="text-align: right;" id="tenbittime"></td></tr>
+            </table>
+            <input id="sevenbitstart" class="fragment" type="hidden" />
+            <input id="eightbitstart" class="fragment" type="hidden" />
+            <input id="ninebitstart" class="fragment" type="hidden" />
+            <input id="tenbitstart" class="fragment" type="hidden" />
           </section>
           <section data-auto-animate>
               <h3>This is the last slide in this section</h3>
@@ -317,9 +360,106 @@ This is my plaintext data
           img.src = 'images/openssl-symmetric-decryption-stdout.png';
         }
 
+        if(event.fragment.getAttribute('id') == 'rotatebinary') {
+          animate = true;
+          binaryLoop();
+        }
+
+        if(event.fragment.getAttribute('id') == 'stoprotatebinary') {
+          //alert('hide');
+          animate = false;
+          //binaryLoop();
+        }
+
+
+
+        if(event.fragment.getAttribute('id') == 'uschars') {
+          //alert('hide');
+          let binary1 = document.getElementById('binary1');
+          binary1.innerText = "01000001";
+        }
+
+        if(event.fragment.getAttribute('id') == 'sevenbitstart') {
+          animate = true;
+          let eightbits = document.getElementById('sevenbits');
+          chars = Array('0','1');
+          start = new Date();
+          let bf = {
+            row: [0, 0, 0, 0, 0, 0, 0],
+            cellindex: [0, 0, 0, 0, 0, 0, 0],
+            maxcolumns: 7
+          }
+          updateValue(bf, false, 0, 8, [eightbits], function(err, resp) {
+            let sevenbittime = document.getElementById('sevenbittime');
+            sevenbittime.innerText = resp.seconds;
+          });
+        }
+
+        if(event.fragment.getAttribute('id') == 'eightbitstart') {
+          animate = true;
+          let eightbits = document.getElementById('eightbits');
+          chars = Array('0','1');
+          start = new Date();
+          let bf = {
+            row: [0, 0, 0, 0, 0, 0, 0, 0],
+            cellindex: [0, 0, 0, 0, 0, 0, 0, 0],
+            maxcolumns: 8
+          }
+          updateValue(bf, false, 0, 8, [eightbits], function(err, resp) {
+            let eightbittime = document.getElementById('eightbittime');
+            eightbittime.innerText = resp.seconds;
+          });
+        }
+
+        if(event.fragment.getAttribute('id') == 'ninebitstart') {
+          animate = true;
+          let ninebits = document.getElementById('ninebits');
+          chars = Array('0','1');
+          start = new Date();
+          let bf = {
+            row: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            cellindex: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            maxcolumns: 9
+          }
+          updateValue(bf, false, 0, 8, [ninebits], function(err, resp) {
+            let ninebittime = document.getElementById('ninebittime');
+            ninebittime.innerText = resp.seconds;
+          });
+        }
+
+        if(event.fragment.getAttribute('id') == 'tenbitstart') {
+          animate = true;
+          let tenbits = document.getElementById('tenbits');
+          chars = Array('0','1');
+          start = new Date();
+          let bf = {
+            row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            cellindex: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            maxcolumns: 10
+          }
+          updateValue(bf, false, 0, 8, [tenbits], function(err, resp) {
+            let tenbittime = document.getElementById('tenbittime');
+            tenbittime.innerText = resp.seconds;
+          });
+        }
+        
+        if(event.fragment.getAttribute('id') == 'rotatechars') {
+          //alert('hide');
+          animate = true;
+          charLoop();
+          //binaryLoop();
+        }
+
+        if(event.fragment.getAttribute('id') == 'stoprotatechars') {
+          //alert('hide');
+          animate = false;
+          //binaryLoop();
+        }
+
         if(event.fragment.getAttribute('id') == 'last-fragment') {
           window.location = 'Day-1-B-Hashing.html'
         }
+
         //console.log(event.fragment.getAttribute('data-fragment-index'));
         //console.log(event.fragment);
       } );
@@ -358,9 +498,161 @@ This is my plaintext data
           let img = document.getElementById('openssl-symmetric-decryption-img');
           img.src = 'images/openssl-symmetric-decryption.png';
         }
+
         //console.log(event.fragment.getAttribute('data-fragment-index'));
         //console.log(event.fragment);
       } );
+
+      var animate = false;
+
+      function charLoop() {
+        chars = Array('`','1','2','3','4','5','6','7','8','9','0','-','=','q','w','e','r','t','y','u','i','o','p','[',']','\\','a','s','d','f','g','h','j','k','l',';','\'','z','x','c','v','b','n','m',',','.','/','~','!','@','#','$','%','^','&','*','(',')','_','+','Q','W','E','R','T','Y','U','I','O','P','{','}','|','A','S','D','F','G','H','J','K','L',':','"','Z','X','C','V','B','N','M','<','>','?',' ');
+        let binary1 = document.getElementById('binary1');
+        let uschars = document.getElementById('uschars');
+
+        updateValue(false, false, 10, 1, [uschars, binary1], function(err, resp) {
+          if(animate) {
+            charLoop();
+          }
+        });
+      }
+
+      function binaryLoop() {
+        chars = Array('0','1');
+        let binary1 = document.getElementById('binary1');
+        start = new Date();
+        let bf = {
+          row: [0, 0, 0, 0, 0, 0, 0, 0],
+          cellindex: [0, 0, 0, 0, 0, 0, 0, 0],
+          maxcolumns: 8
+        }
+        updateValue(bf, false, 10, 8, [binary1], function(err, resp) {
+          if(animate) {
+            setTimeout(function() {
+              binaryLoop();
+            }, 1000);
+          }
+        });
+      }
+
+      //var chars = Array('`','1','2','3','4','5','6','7','8','9','0','-','=','q','w','e','r','t','y','u','i','o','p','[',']','\\','a','s','d','f','g','h','j','k','l',';','\'','z','x','c','v','b','n','m',',','.','/','~','!','@','#','$','%','^','&','*','(',')','_','+','Q','W','E','R','T','Y','U','I','O','P','{','}','|','A','S','D','F','G','H','J','K','L',':','"','Z','X','C','V','B','N','M','<','>','?',' ');
+			//chars = Array('0','1','2','3','4','5','6','7','8','9');
+			var chars = Array('0','1');
+			//alert(String.fromCharCode(1))
+			var start;
+			var iterations = 0;
+			
+			function textToBin(text) {
+				var length = text.length,
+					output = [];
+				for (var i = 0;i < length; i++) {
+					var bin = text[i].charCodeAt().toString(2);
+					output.push(Array(8-bin.length+1).join("0") + bin);
+				} 
+				return output.join(" ");
+      }
+			
+			function updateValue(bf, binary, speed, cols, elem, callback) {
+        if(animate===false) {
+          return;
+        }
+				if(!bf) {
+					start = new Date();
+					bf = {
+						row: [chars[0]],
+						cellindex: [0],
+						maxcolumns: cols
+					}
+				}
+				if(!speed) {
+					speed = 10;
+				}
+				iterations++;
+				
+				/*if(bf.row.join('')=='tes') {
+					console.log('Password is ' + bf.row.join(''));
+					return;
+				}
+				
+				console.log(textToBin(bf.row.join('')));
+				console.log(bf.row.join(''));*/
+
+        console.log(bf.row.join(''));
+				
+				var totalchars;
+				if(binary) {
+					totalchars = 255;
+					bf.row[bf.cellindex.length - 1] = chars[bf.cellindex[bf.cellindex.length - 1]]
+				} else {
+					totalchars = chars.length - 1;
+					bf.row[bf.cellindex.length - 1] = String.fromCharCode(bf.cellindex[bf.cellindex.length - 1]);
+				}
+				
+				var addcolumn = false;
+				for(let i = bf.cellindex.length - 1; i >= 0; i--) {
+					//console.log(i)
+					if(bf.cellindex[i] >= totalchars) {
+						//console.log(i)
+						//console.log('set to 0')
+						addcolumn = true;
+						if(binary) {
+							bf.row[i] = String.fromCharCode(0);
+						} else {
+							bf.row[i] = chars[0];
+						}
+						bf.cellindex[i] = 0;
+						continue;
+					} else {
+						//console.log(i)
+						//console.log('increment')
+						addcolumn = false;
+						bf.cellindex[i]++;
+						if(binary) {
+							bf.row[i] = String.fromCharCode(bf.cellindex[i]);
+						} else {
+							bf.row[i] = chars[bf.cellindex[i]];
+						}
+						bf.cellindex[i] = bf.cellindex[i];
+						break;
+					}
+				}
+				//console.log(addcolumn);
+				if(addcolumn) {
+					if(bf.row.length < bf.maxcolumns) {
+						if(binary) {
+							bf.row.push(String.fromCharCode(0));
+						} else {
+							bf.row.push(chars[0]);
+						}
+						bf.cellindex.push(0);
+						//bf.cellindex.length - 1++;
+						elem[0].innerText = bf.row.join('');
+						if(elem[1]) {
+							elem[1].innerText = textToBin(bf.row.join(''));
+						}
+						setTimeout(function() {
+							updateValue(bf, binary, speed, cols, elem, callback);
+						}, speed);
+					} else {
+						end = new Date();
+						var difference = (end - start) / 1000;
+						callback(false, {seconds: difference});
+						//console.log(difference + 'seconds')
+					}
+				} else {
+					//console.log('here');
+					elem[0].innerText = bf.row.join('');
+					if(elem[1]) {
+						elem[1].innerText = textToBin(bf.row.join(''))
+					}
+					//return
+					setTimeout(function() {
+						updateValue(bf, binary, speed, cols, elem, callback);
+					}, speed);
+					//console.log('here')
+				}
+			}
+
     </script>
     <style>
       td {
