@@ -275,11 +275,11 @@ This is my plaintext data
           <section data-auto-animate>
             <h3>Key Size Matters</h3>
             <table style="font-family: monospace;">
-              <tr><th>Bit Count</th><th>Bits</th><th>Time (seconds)</th></tr>
-              <tr><td style="text-align: center;">7</td><td id="sevenbits">0000000</td><td style="text-align: right;" id="sevenbittime"></td></tr>
-              <tr><td style="text-align: center;">8</td><td id="eightbits">00000000</td><td style="text-align: right;" id="eightbittime"></td></tr>
-              <tr><td style="text-align: center;">9</td><td id="ninebits">000000000</td><td style="text-align: right;" id="ninebittime"></td></tr>
-              <tr><td style="text-align: center;">10</td><td id="tenbits">0000000000</td><td style="text-align: right;" id="tenbittime"></td></tr>
+              <tr><th>Bit Count</th><th>Bits</th><th>Combinations</th><th>Time (seconds)</th></tr>
+              <tr><td style="text-align: center;">7</td><td id="sevenbits">0000000</td><td id="sevencombo" style="text-align: center;">0</td><td style="text-align: right;" id="sevenbittime"></td></tr>
+              <tr><td style="text-align: center;">8</td><td id="eightbits">00000000</td><td id="eightcombo" style="text-align: center;">0</td><td style="text-align: right;" id="eightbittime"></td></tr>
+              <tr><td style="text-align: center;">9</td><td id="ninebits">000000000</td><td id="ninecombo" style="text-align: center;">0</td><td style="text-align: right;" id="ninebittime"></td></tr>
+              <tr><td style="text-align: center;">10</td><td id="tenbits">0000000000</td><td id="tencombo" style="text-align: center;">0</td><td style="text-align: right;" id="tenbittime"></td></tr>
             </table>
             <input id="sevenbitstart" class="fragment" type="hidden" />
             <input id="eightbitstart" class="fragment" type="hidden" />
@@ -381,15 +381,17 @@ This is my plaintext data
 
         if(event.fragment.getAttribute('id') == 'sevenbitstart') {
           animate = true;
-          let eightbits = document.getElementById('sevenbits');
+          let sevenbits = document.getElementById('sevenbits');
+          let sevencombo = document.getElementById('sevencombo');
           chars = Array('0','1');
           start = new Date();
           let bf = {
             row: [0, 0, 0, 0, 0, 0, 0],
             cellindex: [0, 0, 0, 0, 0, 0, 0],
-            maxcolumns: 7
+            maxcolumns: 7,
+            iterations: 1
           }
-          updateValue(bf, false, 0, 8, [eightbits], function(err, resp) {
+          updateValue(bf, false, 0, 8, [sevenbits, false, sevencombo], function(err, resp) {
             let sevenbittime = document.getElementById('sevenbittime');
             sevenbittime.innerText = resp.seconds;
           });
@@ -398,14 +400,16 @@ This is my plaintext data
         if(event.fragment.getAttribute('id') == 'eightbitstart') {
           animate = true;
           let eightbits = document.getElementById('eightbits');
+          let eightcombo = document.getElementById('eightcombo');
           chars = Array('0','1');
           start = new Date();
           let bf = {
             row: [0, 0, 0, 0, 0, 0, 0, 0],
             cellindex: [0, 0, 0, 0, 0, 0, 0, 0],
-            maxcolumns: 8
+            maxcolumns: 8,
+            iterations: 1
           }
-          updateValue(bf, false, 0, 8, [eightbits], function(err, resp) {
+          updateValue(bf, false, 0, 8, [eightbits, false, eightcombo], function(err, resp) {
             let eightbittime = document.getElementById('eightbittime');
             eightbittime.innerText = resp.seconds;
           });
@@ -414,14 +418,16 @@ This is my plaintext data
         if(event.fragment.getAttribute('id') == 'ninebitstart') {
           animate = true;
           let ninebits = document.getElementById('ninebits');
+          let ninecombo = document.getElementById('ninecombo');
           chars = Array('0','1');
           start = new Date();
           let bf = {
             row: [0, 0, 0, 0, 0, 0, 0, 0, 0],
             cellindex: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            maxcolumns: 9
+            maxcolumns: 9,
+            iterations: 1
           }
-          updateValue(bf, false, 0, 8, [ninebits], function(err, resp) {
+          updateValue(bf, false, 0, 8, [ninebits, false, ninecombo], function(err, resp) {
             let ninebittime = document.getElementById('ninebittime');
             ninebittime.innerText = resp.seconds;
           });
@@ -430,14 +436,16 @@ This is my plaintext data
         if(event.fragment.getAttribute('id') == 'tenbitstart') {
           animate = true;
           let tenbits = document.getElementById('tenbits');
+          let tencombo = document.getElementById('tencombo');
           chars = Array('0','1');
           start = new Date();
           let bf = {
             row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             cellindex: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            maxcolumns: 10
+            maxcolumns: 10,
+            iterations: 1
           }
-          updateValue(bf, false, 0, 8, [tenbits], function(err, resp) {
+          updateValue(bf, false, 0, 8, [tenbits, false, tencombo], function(err, resp) {
             let tenbittime = document.getElementById('tenbittime');
             tenbittime.innerText = resp.seconds;
           });
@@ -524,7 +532,8 @@ This is my plaintext data
         let bf = {
           row: [0, 0, 0, 0, 0, 0, 0, 0],
           cellindex: [0, 0, 0, 0, 0, 0, 0, 0],
-          maxcolumns: 8
+          maxcolumns: 8,
+          iterations: 1
         }
         updateValue(bf, false, 10, 8, [binary1], function(err, resp) {
           if(animate) {
@@ -553,21 +562,20 @@ This is my plaintext data
       }
 			
 			function updateValue(bf, binary, speed, cols, elem, callback) {
-        if(animate===false) {
-          return;
-        }
 				if(!bf) {
 					start = new Date();
 					bf = {
 						row: [chars[0]],
 						cellindex: [0],
-						maxcolumns: cols
+						maxcolumns: cols,
+						iterations: 1
 					}
 				}
 				if(!speed) {
 					speed = 10;
 				}
-				iterations++;
+				//console.log(bf.iterations);
+				bf.iterations++;
 				
 				/*if(bf.row.join('')=='tes') {
 					console.log('Password is ' + bf.row.join(''));
@@ -576,8 +584,6 @@ This is my plaintext data
 				
 				console.log(textToBin(bf.row.join('')));
 				console.log(bf.row.join(''));*/
-
-        console.log(bf.row.join(''));
 				
 				var totalchars;
 				if(binary) {
@@ -630,6 +636,9 @@ This is my plaintext data
 						if(elem[1]) {
 							elem[1].innerText = textToBin(bf.row.join(''));
 						}
+						if(elem[2]) {
+							elem[2].innerText = bf.iterations;
+						}
 						setTimeout(function() {
 							updateValue(bf, binary, speed, cols, elem, callback);
 						}, speed);
@@ -644,6 +653,9 @@ This is my plaintext data
 					elem[0].innerText = bf.row.join('');
 					if(elem[1]) {
 						elem[1].innerText = textToBin(bf.row.join(''))
+					}
+					if(elem[2]) {
+						elem[2].innerText = bf.iterations;
 					}
 					//return
 					setTimeout(function() {
